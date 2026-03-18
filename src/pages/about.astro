@@ -1,0 +1,104 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SocialList from "@/components/SocialList.astro";
+---
+
+<BaseLayout
+	title="About · Shivang Pandya"
+	description="Cloud Architect based in Austin, TX. 5 years of experience in OCI, AWS, enterprise migrations and integrations."
+>
+	<h1 class="title mb-8 text-2xl">About</h1>
+
+	<section class="prose prose-shivang max-w-none">
+		<p>
+			I'm <strong>Shivang Pandya</strong> — a Cloud Solutions Architect based in <strong>Austin, TX</strong>.
+			I work on Oracle Cloud Infrastructure's Enterprise Growth team, helping organisations design
+			end-to-end cloud architectures, deliver technical workshops, and migrate on-premise workloads to the cloud.
+		</p>
+		<p>
+			My background spans cloud architecture, enterprise systems integration, machine learning, and
+			full-stack development. I'm a native Hindi and Gujarati speaker, and a proficient English speaker.
+		</p>
+
+		<h2>Skills</h2>
+		<div class="not-prose flex flex-wrap gap-2 mb-6">
+			{[
+				"Python", "Java", "Terraform", "Docker", "Kubernetes", "Linux",
+				"Oracle Cloud (OCI)", "Amazon Web Services", "Microsoft Azure",
+				"Oracle Integration Cloud", "REST APIs", "SOAP", "FBDI",
+				"MS SQL Server", "MySQL", "PostgreSQL", "MongoDB",
+				"Keras", "Flask", "Tableau", "JIRA", "Confluence",
+			].map((skill) => (
+				<span class="rounded border border-border px-2 py-0.5 font-mono text-xs text-muted-foreground">
+					{skill}
+				</span>
+			))}
+		</div>
+
+		<h2>Experience</h2>
+
+		<div class="not-prose space-y-6 mb-6">
+			<div>
+				<div class="flex justify-between flex-wrap gap-1 mb-1">
+					<span class="font-mono font-medium">Cloud Solutions Architect</span>
+					<span class="font-mono text-xs text-muted-foreground">Jul 2021 – Present</span>
+				</div>
+				<div class="text-sm text-accent mb-2">Oracle · Enterprise Growth Team · Austin, TX</div>
+				<ul class="text-sm text-muted-foreground space-y-1 list-none pl-0">
+					<li class="before:content-['–'] before:mr-2 before:text-accent">Designing end-to-end cloud architectures to solve enterprise customer business challenges on OCI</li>
+					<li class="before:content-['–'] before:mr-2 before:text-accent">Integrating systems including databases, FTP servers, and SaaS applications via REST, SOAP, and FBDI workflows</li>
+					<li class="before:content-['–'] before:mr-2 before:text-accent">Assisting in migration of on-premise applications to Oracle Cloud Infrastructure with downtime management strategies</li>
+					<li class="before:content-['–'] before:mr-2 before:text-accent">Delivering technical workshops and product webinar sessions to Oracle Cloud Enterprise customers</li>
+				</ul>
+			</div>
+
+			<div>
+				<div class="flex justify-between flex-wrap gap-1 mb-1">
+					<span class="font-mono font-medium">Technology Summer Analyst — Global Markets</span>
+					<span class="font-mono text-xs text-muted-foreground">Jul 2020 – Aug 2020</span>
+				</div>
+				<div class="text-sm text-accent mb-2">Credit Suisse · New York, NY</div>
+				<ul class="text-sm text-muted-foreground space-y-1 list-none pl-0">
+					<li class="before:content-['–'] before:mr-2 before:text-accent">Built a Python-based recommender system to help the sales team improve KPIs on structured product derivatives</li>
+					<li class="before:content-['–'] before:mr-2 before:text-accent">Developed a Keras deep learning model analysing client behaviour to predict products from a 27,000-item catalogue</li>
+					<li class="before:content-['–'] before:mr-2 before:text-accent">Predicted 41% increase in conversion rate; exposed model via Flask RESTful API</li>
+				</ul>
+			</div>
+
+			<div>
+				<div class="flex justify-between flex-wrap gap-1 mb-1">
+					<span class="font-mono font-medium">Software Engineer Intern — iOS</span>
+					<span class="font-mono text-xs text-muted-foreground">Nov 2017 – Jan 2018</span>
+				</div>
+				<div class="text-sm text-accent mb-2">Upnexo Technologies · Vadodara, India</div>
+				<ul class="text-sm text-muted-foreground space-y-1 list-none pl-0">
+					<li class="before:content-['–'] before:mr-2 before:text-accent">Researched migration of database layer from SQLite and CoreData to Realm and Firebase</li>
+					<li class="before:content-['–'] before:mr-2 before:text-accent">Modified the Split Screen app for macOS, impacting 50,000+ users</li>
+				</ul>
+			</div>
+		</div>
+
+		<h2>Education</h2>
+		<div class="not-prose space-y-4 mb-6">
+			<div>
+				<div class="flex justify-between flex-wrap gap-1">
+					<span class="font-mono font-medium">M.S. Computer Science</span>
+					<span class="font-mono text-xs text-muted-foreground">2019 – 2021</span>
+				</div>
+				<div class="text-sm text-accent">New York University</div>
+			</div>
+			<div>
+				<div class="flex justify-between flex-wrap gap-1">
+					<span class="font-mono font-medium">B.E. Information Technology</span>
+					<span class="font-mono text-xs text-muted-foreground">2015 – 2019</span>
+				</div>
+				<div class="text-sm text-accent">Gujarat Technological University</div>
+			</div>
+		</div>
+
+		<h2>Find me</h2>
+		<div class="not-prose">
+			<SocialList />
+		</div>
+	</section>
+</BaseLayout>

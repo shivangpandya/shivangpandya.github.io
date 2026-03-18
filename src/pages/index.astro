@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PostPreview from "@/components/PostPreview.astro";
+import NotePreview from "@/components/NotePreview.astro";
+import SocialList from "@/components/SocialList.astro";
+import { siteConfig } from "@/site.config";
+
+const allPosts = await getCollection("post", ({ data }) => !data.draft);
+allPosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+const recentPosts = allPosts.slice(0, 3);
+
+const allNotes = await getCollection("note", ({ data }) => !data.draft);
+allNotes.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+const recentNotes = allNotes.slice(0, 3);
+---
+
+<BaseLayout title={`${siteConfig.author} · Cloud Architect`}>
+	<section>
+		<h1 class="title mb-6 text-xl">
+			Hi, I'm <span class="text-accent">Shivang Pandya</span> 👋
+		</h1>
+		<p class="mb-4 text-muted-foreground">
+			Cloud Solutions Architect based in <strong>Austin, TX</strong> with 5 years of experience building
+			enterprise-grade cloud solutions. I work on Oracle Cloud Infrastructure's Enterprise Growth team,
+			helping organisations design, migrate, and modernise on the cloud.
+		</p>
+		<p class="mb-6 text-muted-foreground">
+			I write about OCI, AWS, cloud migrations, enterprise integration, and the occasional ML project.
+		</p>
+		<SocialList />
+	</section>
+
+	<section class="mt-12">
+		<h2 class="title mb-4 text-sm uppercase tracking-widest text-muted-foreground">Recent Posts</h2>
+		<ul class="space-y-4" role="list">
+			{recentPosts.map((post) => <PostPreview post={post} />)}
+		</ul>
+		<a class="mt-4 inline-block text-sm text-accent hover:underline" href="/posts/">
+			All posts →
+		</a>
+	</section>
+
+	{recentNotes.length > 0 && (
+		<section class="mt-12">
+			<h2 class="title mb-4 text-sm uppercase tracking-widest text-muted-foreground">Notes</h2>
+			<ul class="space-y-3" role="list">
+				{recentNotes.map((note) => <NotePreview note={note} />)}
+			</ul>
+		</section>
+	)}
+</BaseLayout>

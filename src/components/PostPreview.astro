@@ -1,0 +1,58 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+	post: CollectionEntry<"post">;
+	as?: "h2" | "h3";
+}
+
+const { post, as: Tag = "h3" } = Astro.props;
+
+const dateFormatted = new Intl.DateTimeFormat("en-GB", {
+	day: "numeric",
+	month: "short",
+	year: "numeric",
+}).format(post.data.publishDate);
+---
+
+<li style="display: grid; grid-template-columns: 110px 1fr; gap: 0.75rem; padding: 0.85rem 0; border-bottom: 1px solid var(--border); align-items: baseline;">
+	<time
+		datetime={post.data.publishDate.toISOString()}
+		style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;"
+	>
+		{dateFormatted}
+	</time>
+	<div>
+		<Tag style="font-size: 0.92rem; font-weight: 500; margin: 0;">
+			<a
+				href={`/posts/${post.id}/`}
+				style="color: var(--text); text-decoration: none; transition: color 0.15s;"
+				onmouseover="this.style.color='var(--accent)'"
+				onmouseout="this.style.color='var(--text)'"
+			>
+				{post.data.title}
+			</a>
+		</Tag>
+		{post.data.tags.length > 0 && (
+			<div style="display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.25rem;">
+				{post.data.tags.map((tag) => (
+					<span style="font-size: 0.68rem; background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent); padding: 0.1rem 0.45rem; border-radius: 3px; letter-spacing: 0.03em;">
+						#{tag}
+					</span>
+				))}
+			</div>
+		)}
+	</div>
+</li>
+
+<style>
+	@media (max-width: 520px) {
+		li {
+			grid-template-columns: 1fr !important;
+			gap: 0.1rem !important;
+		}
+		time {
+			display: none !important;
+		}
+	}
+</style>

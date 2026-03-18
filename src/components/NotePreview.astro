@@ -1,0 +1,22 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+	note: CollectionEntry<"note">;
+}
+
+const { note } = Astro.props;
+---
+
+<li
+	style="background: var(--bg2); border: 1px solid var(--border); border-radius: 5px; padding: 1rem 1.1rem; transition: border-color 0.15s; list-style: none;"
+	onmouseover="this.style.borderColor='var(--accent)'"
+	onmouseout="this.style.borderColor='var(--border)'"
+>
+	<h4 style="font-size: 0.88rem; font-weight: 500; margin-bottom: 0.25rem;">{note.data.title}</h4>
+	{note.data.description && (
+		<p style="font-size: 0.82rem; color: var(--muted); font-family: var(--font-sans); margin: 0; line-height: 1.6;">
+			{note.data.description}
+		</p>
+	)}
+</li>

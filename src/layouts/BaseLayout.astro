@@ -1,0 +1,185 @@
+---
+import { siteConfig, menuLinks } from "@/site.config";
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = `${siteConfig.author} · Cloud Architect`,
+	description = siteConfig.description,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang={siteConfig.lang} class="dark">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalURL} />
+
+		<!-- Open Graph -->
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:type" content="website" />
+
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500&display=swap"
+			rel="stylesheet"
+		/>
+
+		<style is:global>
+			:root {
+				--font-mono: 'IBM Plex Mono', monospace;
+				--font-sans: 'IBM Plex Sans', sans-serif;
+				--bg: #1a1a1a;
+				--bg2: #222222;
+				--surface: #2a2a2a;
+				--border: #333333;
+				--text: #e8e6e0;
+				--muted: #888880;
+				--accent: #a8ff78;
+			}
+			html.light {
+				--bg: #fafaf7;
+				--bg2: #f2f2ee;
+				--surface: #eeeee9;
+				--border: #d8d8d0;
+				--text: #1a1a18;
+				--muted: #777770;
+				--accent: #2d6a20;
+			}
+			* { box-sizing: border-box; margin: 0; padding: 0; }
+			html { scroll-behavior: smooth; }
+			body {
+				font-family: var(--font-mono);
+				background: var(--bg);
+				color: var(--text);
+				line-height: 1.7;
+				font-size: 15px;
+				min-height: 100vh;
+				display: flex;
+				flex-direction: column;
+			}
+			a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+			a:hover { text-decoration-style: dashed; }
+
+			/* Prose styles */
+			.prose { font-family: var(--font-sans); font-size: 0.95rem; line-height: 1.85; color: var(--text); }
+			.prose h2 { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 600; margin: 2rem 0 0.75rem; }
+			.prose h3 { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+			.prose p { margin-bottom: 1.2rem; }
+			.prose ul, .prose ol { padding-left: 1.5rem; margin-bottom: 1.2rem; }
+			.prose li { margin-bottom: 0.4rem; }
+			.prose strong { font-weight: 500; color: var(--text); }
+			.prose a { color: var(--accent); }
+			.prose blockquote { border-left: 2px solid var(--accent); padding-left: 1rem; color: var(--muted); font-style: italic; margin: 1.5rem 0; }
+			.prose code { font-family: var(--font-mono); font-size: 0.82rem; background: var(--surface); padding: 0.1rem 0.4rem; border-radius: 3px; border: 1px solid var(--border); }
+			.prose pre { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1.2rem; overflow-x: auto; margin: 1.5rem 0; }
+			.prose pre code { background: none; border: none; padding: 0; font-size: 0.85rem; }
+			.prose table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1.5rem 0; }
+			.prose th { border-bottom: 1px solid var(--border); padding: 0.5rem 0.75rem; text-align: left; font-weight: 500; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+			.prose td { border-bottom: 1px solid var(--border); padding: 0.5rem 0.75rem; }
+			.prose hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+			/* Title */
+			.title { color: var(--text); font-weight: 600; }
+
+			/* Accent / muted text */
+			.text-accent { color: var(--accent); }
+			.text-muted-foreground { color: var(--muted); }
+
+			/* Border */
+			.border-border { border-color: var(--border); }
+			.border-accent\/50 { border-color: color-mix(in srgb, var(--accent) 50%, transparent); }
+
+			/* Background */
+			.bg-background { background: var(--bg2); }
+			.bg-accent\/10 { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+
+			/* Rounded */
+			.rounded { border-radius: 4px; }
+			.rounded-lg { border-radius: 6px; }
+
+			/* Border */
+			.border { border-width: 1px; border-style: solid; }
+		</style>
+	</head>
+	<body>
+		<!-- Header -->
+		<header style="border-bottom: 1px solid var(--border); padding: 1.1rem 0; position: sticky; top: 0; background: var(--bg); z-index: 100;">
+			<div style="max-width: 720px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem;">
+				<a href="/" style="font-size: 1rem; font-weight: 600; color: var(--text); text-decoration: none; letter-spacing: -0.02em;">
+					~/shivang
+				</a>
+				<nav style="display: flex; align-items: center; gap: 0.1rem;">
+					{menuLinks.map(({ link, title }) => (
+						<a
+							href={link}
+							style={`font-size: 0.875rem; color: var(--muted); text-decoration: none; padding: 0.3rem 0.6rem; border-radius: 4px; transition: color 0.15s, background 0.15s;`}
+							class:list={[{ "nav-active": Astro.url.pathname === link || (link !== "/" && Astro.url.pathname.startsWith(link)) }]}
+						>
+							{title.toLowerCase()}
+						</a>
+					))}
+					<button
+						id="theme-toggle"
+						style="background: none; border: 1px solid var(--border); color: var(--muted); cursor: pointer; padding: 0.3rem 0.5rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.8rem; margin-left: 0.5rem; transition: color 0.15s;"
+						title="Toggle theme"
+					>
+						◑
+					</button>
+				</nav>
+			</div>
+		</header>
+
+		<!-- Main -->
+		<main style="flex: 1; padding: 3rem 0;">
+			<div style="max-width: 720px; margin: 0 auto; padding: 0 1.5rem;">
+				<slot />
+			</div>
+		</main>
+
+		<!-- Footer -->
+		<footer style="border-top: 1px solid var(--border); padding: 1.5rem 0; font-size: 0.78rem; color: var(--muted);">
+			<div style="max-width: 720px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+				<span>© 2025 Shivang Pandya · Austin, TX</span>
+				<div style="display: flex; gap: 1.25rem;">
+					<a href="https://github.com/shivangpandya" target="_blank" rel="noopener" style="color: var(--muted); text-decoration: none;">github</a>
+					<a href="https://www.linkedin.com/in/shivangpandya" target="_blank" rel="noopener" style="color: var(--muted); text-decoration: none;">linkedin</a>
+					<a href="/rss.xml" style="color: var(--muted); text-decoration: none;">rss</a>
+				</div>
+			</div>
+		</footer>
+
+		<style>
+			nav a:hover, nav .nav-active {
+				color: var(--text) !important;
+				background: var(--surface);
+			}
+		</style>
+
+		<script>
+			const btn = document.getElementById("theme-toggle");
+			const html = document.documentElement;
+			const stored = localStorage.getItem("theme");
+			if (stored === "light") html.classList.replace("dark", "light");
+
+			btn?.addEventListener("click", () => {
+				const isLight = html.classList.contains("light");
+				html.classList.toggle("dark", isLight);
+				html.classList.toggle("light", !isLight);
+				localStorage.setItem("theme", isLight ? "dark" : "light");
+			});
+		</script>
+	</body>
+</html>
