@@ -1,75 +1,25 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-
-const projects = [
-	{
-		title: "Rideshare PPE Detector",
-		description:
-			"Cab ride-share booking system that only allows bookings if the user has a face mask detected via AWS Rekognition. Uses Lex for the booking platform, API Gateway, S3, and IAM for user provisioning.",
-		tech: ["aws", "rekognition", "lex", "python", "s3", "api-gateway"],
-		github: "https://github.com/shivangpandya",
-		period: "Nov 2020 – Dec 2020",
-	},
-	{
-		title: "Smart Text-Voice Photo Album",
-		description:
-			"Intelligent photo album searchable by both text and voice queries. AWS Lambda for serverless compute, Transcribe for speech-to-text, deployed with CloudFormation and CodePipeline.",
-		tech: ["aws", "lambda", "transcribe", "cloudformation", "codepipeline"],
-		github: "https://github.com/shivangpandya",
-		period: "Oct 2020 – Nov 2020",
-	},
-	{
-		title: "Smart Door Authentication System",
-		description:
-			"Distributed smart door authentication system using real-time video analysis. Kinesis Video Streams for ingestion, Rekognition for face detection, DynamoDB for storage, SNS for OTP delivery.",
-		tech: ["aws", "kinesis", "rekognition", "dynamodb", "sns"],
-		github: "https://github.com/shivangpandya",
-		period: "Sep 2020 – Oct 2020",
-	},
-	{
-		title: "NYC Civil Service WebApp",
-		description:
-			"Django web app to streamline applications for 1000+ NYC Civil Service jobs, reducing application time by 60%. Led a team of 5 as Product Owner. CI/CD pipeline via TravisCI.",
-		tech: ["django", "python", "javascript", "bootstrap", "travisci"],
-		github: "https://github.com/shivangpandya",
-		period: "Aug 2019 – May 2020",
-	},
-];
 ---
 
 <BaseLayout
-	title="Projects · Shivang Pandya"
-	description="Academic and personal projects across cloud, ML, and full-stack development."
+	title="Projects moved · Shivang Pandya"
+	description="Projects has moved to the TIL section."
 >
-	<h1 class="title mb-2 text-2xl">Projects</h1>
-	<p class="mb-10 text-muted-foreground text-sm">
-		Academic and personal projects across cloud, ML, and full-stack development.
-	</p>
+	<meta http-equiv="refresh" content="0; url=/til/" />
 
-	<ul class="space-y-6" role="list">
-		{projects.map((project) => (
-			<li class="rounded-lg border border-border bg-background p-5 transition-colors hover:border-accent/50">
-				<div class="flex items-start justify-between gap-4 flex-wrap mb-2">
-					<h2 class="font-mono font-semibold text-base">{project.title}</h2>
-					<span class="font-mono text-xs text-muted-foreground">{project.period}</span>
-				</div>
-				<p class="text-sm text-muted-foreground mb-3 leading-relaxed">{project.description}</p>
-				<div class="flex flex-wrap gap-1.5 mb-3">
-					{project.tech.map((t) => (
-						<span class="rounded bg-accent/10 px-2 py-0.5 font-mono text-xs text-accent">
-							{t}
-						</span>
-					))}
-				</div>
-				<a
-					href={project.github}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="font-mono text-xs text-muted-foreground hover:text-accent transition-colors"
-				>
-					↗ github
-				</a>
-			</li>
-		))}
-	</ul>
+	<section class="section-card empty-state">
+		<p class="eyebrow">Route update</p>
+		<h1 class="page-title">Projects moved to TIL.</h1>
+		<p class="page-copy" style="max-width: 32rem; margin: 0 auto;">
+			That section now lives under your markdown-backed TIL archive.
+		</p>
+		<div class="hero-actions" style="justify-content: center;">
+			<a class="button" href="/til/">Open TIL</a>
+		</div>
+	</section>
+
+	<script>
+		window.location.replace("/til/");
+	</script>
 </BaseLayout>

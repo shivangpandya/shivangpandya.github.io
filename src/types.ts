@@ -5,6 +5,10 @@ export type SiteConfig = {
 	ogLocale: string;
 	showToc: boolean;
 	webmentionUrl?: string;
+	heroImage?: {
+		src?: string;
+		alt?: string;
+	};
 	date: {
 		locale: string | string[];
 		options: Intl.DateTimeFormatOptions;

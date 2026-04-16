@@ -4,37 +4,37 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getEntryTags, getTagHref } from "@/utils/tags";
 
 export async function getStaticPaths() {
-	const posts = await getCollection("post", ({ data }) => !data.draft);
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: { post },
+	const notes = await getCollection("note", ({ data }) => !data.draft);
+	return notes.map((note) => ({
+		params: { slug: note.id },
+		props: { note },
 	}));
 }
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+const { note } = Astro.props;
+const { Content } = await render(note);
 
 const dateFormatted = new Intl.DateTimeFormat("en-GB", {
 	day: "numeric",
 	month: "short",
 	year: "numeric",
-}).format(post.data.publishDate);
+}).format(note.data.publishDate);
 
-const tags = getEntryTags(post);
+const tags = getEntryTags(note);
 ---
 
-<BaseLayout title={`${post.data.title} · Shivang Pandya`} description={post.data.description}>
+<BaseLayout title={`${note.data.title} · Shivang Pandya`} description={note.data.description ?? "TIL note"}>
 	<section class="article-shell">
-		<a class="back-link" href="/posts/">
+		<a class="back-link" href="/til/">
 			<span aria-hidden="true">←</span>
-			Back to blog
+			Back to TIL
 		</a>
 
 		<article class="article-card">
 			<header class="article-header">
-				<p class="eyebrow">Blog post</p>
-				<h1 class="article-title">{post.data.title}</h1>
-				<p class="page-copy">{post.data.description}</p>
+				<p class="eyebrow">Today I learned</p>
+				<h1 class="article-title">{note.data.title}</h1>
+				{note.data.description && <p class="page-copy">{note.data.description}</p>}
 				<div class="meta-row">
 					<span class="meta-pill">{dateFormatted}</span>
 					{tags.map((tag) => (

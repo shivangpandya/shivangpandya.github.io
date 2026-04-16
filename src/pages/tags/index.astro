@@ -1,0 +1,46 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { collectTagSummaries } from "@/utils/tags";
+
+const posts = await getCollection("post", ({ data }) => !data.draft);
+const notes = await getCollection("note", ({ data }) => !data.draft);
+const tagSummaries = collectTagSummaries(posts, notes);
+---
+
+<BaseLayout
+	title="Tags · Shivang Pandya"
+	description="Browse blog posts and TIL notes by tag."
+>
+	<section class="section-card tone-sky">
+		<div class="page-hero">
+			<p class="eyebrow">Topic index</p>
+			<h1 class="page-title">Tags</h1>
+			<p class="page-copy">
+				Browse writing by topic across both longer blog posts and shorter TIL notes.
+			</p>
+		</div>
+	</section>
+
+	<section class="section-card tone-sunset">
+		{tagSummaries.length > 0 ? (
+			<div class="tag-grid">
+				{tagSummaries.map((tag) => (
+					<a class="tag-card" href={`/tags/${tag.slug}/`}>
+						<div class="tag-card-title">#{tag.label}</div>
+						<p class="tag-card-meta">
+							{tag.count} {tag.count === 1 ? "entry" : "entries"} · {tag.postCount}{" "}
+							blog {tag.postCount === 1 ? "post" : "posts"} · {tag.noteCount}{" "}
+							TIL {tag.noteCount === 1 ? "note" : "notes"}
+						</p>
+						<span class="story-link">Open tag archive <span aria-hidden="true">→</span></span>
+					</a>
+				))}
+			</div>
+		) : (
+			<div class="empty-state">
+				<p class="page-copy">Add tags to your posts or notes and they’ll appear here automatically.</p>
+			</div>
+		)}
+	</section>
+</BaseLayout>

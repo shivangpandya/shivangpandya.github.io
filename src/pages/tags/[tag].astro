@@ -1,0 +1,82 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import NotePreview from "@/components/NotePreview.astro";
+import PostPreview from "@/components/PostPreview.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import type { TagSummary } from "@/utils/tags";
+import {
+	collectTagSummaries,
+	filterEntriesByTag,
+	sortEntriesByPublishDateDesc,
+} from "@/utils/tags";
+
+export async function getStaticPaths() {
+	const posts = await getCollection("post", ({ data }) => !data.draft);
+	const notes = await getCollection("note", ({ data }) => !data.draft);
+	const tagSummaries = collectTagSummaries(posts, notes);
+
+	return tagSummaries.map((tag) => ({
+		params: { tag: tag.slug },
+		props: {
+			tag,
+			posts: sortEntriesByPublishDateDesc(filterEntriesByTag(posts, tag.slug)),
+			notes: sortEntriesByPublishDateDesc(filterEntriesByTag(notes, tag.slug)),
+		},
+	}));
+}
+
+const {
+	tag,
+	posts,
+	notes,
+}: {
+	tag: TagSummary;
+	posts: CollectionEntry<"post">[];
+	notes: CollectionEntry<"note">[];
+} = Astro.props;
+---
+
+<BaseLayout
+	title={`#${tag.label} · Shivang Pandya`}
+	description={`Everything tagged ${tag.label} across blog posts and TIL notes.`}
+>
+	<section class="section-card tone-mint">
+		<div class="page-hero">
+			<p class="eyebrow">Tag archive</p>
+			<h1 class="page-title">#{tag.label}</h1>
+			<p class="page-copy">
+				{tag.count} {tag.count === 1 ? "entry" : "entries"} grouped under this topic across the site.
+			</p>
+			<div class="meta-row">
+				<span class="meta-pill">{tag.postCount} blog {tag.postCount === 1 ? "post" : "posts"}</span>
+				<span class="meta-pill">{tag.noteCount} TIL {tag.noteCount === 1 ? "note" : "notes"}</span>
+				<a class="tag tag-link" href="/tags/">All tags</a>
+			</div>
+		</div>
+	</section>
+
+	{posts.length > 0 && (
+		<section class="section-card tone-sunset">
+			<div class="section-head">
+				<p class="eyebrow">Blog matches</p>
+				<h2 class="section-title">Posts tagged #{tag.label}</h2>
+			</div>
+			<ul class="story-list" role="list" style="margin-top: 1.4rem;">
+				{posts.map((post) => <PostPreview post={post} as="h2" />)}
+			</ul>
+		</section>
+	)}
+
+	{notes.length > 0 && (
+		<section class="section-card tone-ink">
+			<div class="section-head">
+				<p class="eyebrow">TIL matches</p>
+				<h2 class="section-title">Notes tagged #{tag.label}</h2>
+			</div>
+			<ul class="card-list" role="list" style="margin-top: 1.4rem;">
+				{notes.map((note) => <NotePreview note={note} />)}
+			</ul>
+		</section>
+	)}
+</BaseLayout>

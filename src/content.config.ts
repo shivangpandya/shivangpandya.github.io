@@ -21,12 +21,13 @@ const post = defineCollection({
 const note = defineCollection({
 	type: "content",
 	schema: z.object({
-		title: z.string().max(60),
+		title: z.string().max(150),
 		description: z.string().optional(),
 		publishDate: z
 			.string()
 			.or(z.date())
 			.transform((val) => new Date(val)),
+		tags: z.array(z.string()).default([]),
 		draft: z.boolean().default(false),
 	}),
 });

@@ -1,9 +1,9 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import PostPreview from "@/components/PostPreview.astro";
 import NotePreview from "@/components/NotePreview.astro";
+import PostPreview from "@/components/PostPreview.astro";
 import SocialList from "@/components/SocialList.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 import { siteConfig } from "@/site.config";
 
 const allPosts = await getCollection("post", ({ data }) => !data.draft);
@@ -13,40 +13,82 @@ const recentPosts = allPosts.slice(0, 3);
 const allNotes = await getCollection("note", ({ data }) => !data.draft);
 allNotes.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 const recentNotes = allNotes.slice(0, 3);
+
+const heroImage = siteConfig.heroImage?.src ?? "/images/hero-sample-main.png";
+const heroAlt = siteConfig.heroImage?.alt ?? "Abstract illustration of cloud architecture layers and connected systems.";
 ---
 
 <BaseLayout title={`${siteConfig.author} · Cloud Architect`}>
-	<section>
-		<h1 class="title mb-6 text-xl">
-			Hi, I'm <span class="text-accent">Shivang Pandya</span> 👋
-		</h1>
-		<p class="mb-4 text-muted-foreground">
-			Cloud Solutions Architect based in <strong>Austin, TX</strong> with 5 years of experience building
-			enterprise-grade cloud solutions. I work on Oracle Cloud Infrastructure's Enterprise Growth team,
-			helping organisations design, migrate, and modernise on the cloud.
-		</p>
-		<p class="mb-6 text-muted-foreground">
-			I write about OCI, AWS, cloud migrations, enterprise integration, and the occasional ML project.
-		</p>
-		<SocialList />
+	<section class="hero-card">
+		<div class="hero-layout">
+			<div class="hero-copy">
+				<p class="eyebrow">Portfolio · Writing · Cloud systems</p>
+				<h1 class="hero-title">
+					I build
+					<span class="accent-text">cloud journeys</span>
+					that teams can actually run.
+				</h1>
+				<p class="lead">
+					I'm Shivang Pandya, a Cloud Solutions Architect based in Austin.
+				</p>
+				<div class="hero-actions">
+					<a class="button" href="/about/">About me</a>
+					<a class="button quiet" href="/posts/">Read the blog</a>
+					<a class="button quiet" href="/til/">Open TIL archive</a>
+				</div>
+				<div class="hero-socials">
+					<SocialList />
+				</div>
+			</div>
+
+			<div class="hero-visual">
+				<div class="hero-media-frame">
+					<div class="hero-media">
+						<img src={heroImage} alt={heroAlt} />
+					</div>
+				</div>
+				<div class="hero-support">
+					<p class="kicker">What this site is for</p>
+					<p class="hero-support-title">A portfolio that behaves like a working notebook.</p>
+					<p class="hero-support-copy">
+						Instead of a static resume site, this is structured around what I am learning, shipping, and refining in public.
+					</p>
+				</div>
+			</div>
+		</div>
 	</section>
 
-	<section class="mt-12">
-		<h2 class="title mb-4 text-sm uppercase tracking-widest text-muted-foreground">Recent Posts</h2>
-		<ul class="space-y-4" role="list">
-			{recentPosts.map((post) => <PostPreview post={post} />)}
-		</ul>
-		<a class="mt-4 inline-block text-sm text-accent hover:underline" href="/posts/">
-			All posts →
-		</a>
-	</section>
+	<section class="two-column">
+		<div class="section-card tone-sunset">
+			<div class="section-head">
+				<p class="eyebrow">Recent writing</p>
+				<h2 class="section-title">Blog posts with deeper walkthroughs</h2>
+				<p class="section-copy">
+					Longer essays on architecture, migrations, integration patterns, and the occasional ML detour.
+				</p>
+			</div>
+			<ul class="story-list" role="list" style="margin-top: 1.4rem;">
+				{recentPosts.map((post) => <PostPreview post={post} />)}
+			</ul>
+			<div class="inline-actions" style="margin-top: 1.2rem;">
+				<a class="story-link" href="/posts/">View all posts <span aria-hidden="true">→</span></a>
+			</div>
+		</div>
 
-	{recentNotes.length > 0 && (
-		<section class="mt-12">
-			<h2 class="title mb-4 text-sm uppercase tracking-widest text-muted-foreground">Notes</h2>
-			<ul class="space-y-3" role="list">
+		<div class="section-card tone-ink">
+			<div class="section-head">
+				<p class="eyebrow">Working notebook</p>
+				<h2 class="section-title">Today I learned</h2>
+				<p class="section-copy">
+					Shorter markdown notes captured directly from the way I work, test, and debug systems.
+				</p>
+			</div>
+			<ul class="card-list" role="list" style="margin-top: 1.4rem;">
 				{recentNotes.map((note) => <NotePreview note={note} />)}
 			</ul>
-		</section>
-	)}
+			<div class="inline-actions" style="margin-top: 1.2rem;">
+				<a class="story-link" href="/til/">Open TIL archive <span aria-hidden="true">→</span></a>
+			</div>
+		</div>
+	</section>
 </BaseLayout>

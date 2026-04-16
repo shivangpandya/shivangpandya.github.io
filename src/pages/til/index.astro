@@ -1,0 +1,46 @@
+---
+import { getCollection } from "astro:content";
+import NotePreview from "@/components/NotePreview.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { collectTagSummaries, sortEntriesByPublishDateDesc } from "@/utils/tags";
+
+const allNotes = sortEntriesByPublishDateDesc(
+	await getCollection("note", ({ data }) => !data.draft),
+);
+const tagSummaries = collectTagSummaries([], allNotes).slice(0, 10);
+---
+
+<BaseLayout
+	title="TIL · Shivang Pandya"
+	description="Today I Learned notes from cloud architecture work, experiments, and engineering practice."
+>
+	<section class="section-card tone-mint">
+		<div class="page-hero">
+			<p class="eyebrow">Notebook archive</p>
+			<h1 class="page-title">TIL</h1>
+			<p class="page-copy">
+				Short notes pulled from the way I work: experiments, command-line learnings, architecture shortcuts, and implementation details I want to remember.
+			</p>
+		</div>
+
+		{tagSummaries.length > 0 && (
+			<div style="margin-top: 1.4rem;">
+				<div class="tag-list">
+					{tagSummaries.map((tag) => (
+						<a class="tag tag-link" href={`/tags/${tag.slug}/`}>
+							#{tag.label}
+							<span class="tag-count">{tag.count}</span>
+						</a>
+					))}
+					<a class="tag tag-link" href="/tags/">Browse all tags</a>
+				</div>
+			</div>
+		)}
+	</section>
+
+	<section class="section-card tone-ink">
+		<ul class="card-list" role="list">
+			{allNotes.map((note) => <NotePreview note={note} />)}
+		</ul>
+	</section>
+</BaseLayout>

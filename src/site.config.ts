@@ -6,7 +6,7 @@ export const siteConfig: SiteConfig = {
 	author: "Shivang Pandya",
 	// Meta property, also used in src/components/BaseHead.astro
 	description:
-		"Cloud Architect based in Austin, TX. Writing about OCI, AWS, cloud migrations, and enterprise architecture.",
+		"Cloud Architect based in Austin, TX. I write about cloud architecture, software development, and my learnings in the tech industry.",
 	// HTML lang property
 	lang: "en-GB",
 	// Meta property, equivalent to og:locale
@@ -18,6 +18,10 @@ export const siteConfig: SiteConfig = {
 	// Option to display the "Edit on GitHub" link in the post footer
 	// Change to your GitHub repo link
 	webmentionUrl: undefined,
+	heroImage: {
+		src: "/images/hero-sample-main.png",
+		alt: "Abstract illustration of cloud architecture layers and connected systems.",
+	},
 	// Date format used in the blog
 	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options
 	date: {
@@ -41,8 +45,12 @@ export const menuLinks: Array<{ link: string; title: string }> = [
 		title: "Blog",
 	},
 	{
-		link: "/projects/",
-		title: "Projects",
+		link: "/til/",
+		title: "TIL",
+	},
+	{
+		link: "/tags/",
+		title: "Tags",
 	},
 	{
 		link: "/about/",

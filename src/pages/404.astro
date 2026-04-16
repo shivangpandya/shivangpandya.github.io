@@ -3,9 +3,15 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="404 · Not Found" description="Page not found.">
-	<div style="text-align: center; padding: 4rem 0;">
-		<p style="font-size: 4rem; font-weight: 600; color: var(--accent); margin-bottom: 1rem;">404</p>
-		<p style="color: var(--muted); margin-bottom: 2rem;">This page doesn't exist.</p>
-		<a href="/" style="font-size: 0.85rem;">← go home</a>
-	</div>
+	<section class="hero-card empty-state">
+		<p class="eyebrow">Not found</p>
+		<h1 class="page-title">This page drifted off course.</h1>
+		<p class="page-copy" style="max-width: 32rem; margin: 0 auto;">
+			The link may be old, the page may have moved, or the route never existed in the first place.
+		</p>
+		<div class="hero-actions" style="justify-content: center;">
+			<a class="button" href="/">Go home</a>
+			<a class="button secondary" href="/til/">Browse TIL</a>
+		</div>
+	</section>
 </BaseLayout>

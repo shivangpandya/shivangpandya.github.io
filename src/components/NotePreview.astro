@@ -1,22 +1,39 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { getEntryTags, getTagHref } from "@/utils/tags";
 
 interface Props {
 	note: CollectionEntry<"note">;
 }
 
 const { note } = Astro.props;
+
+const dateFormatted = new Intl.DateTimeFormat("en-GB", {
+	day: "numeric",
+	month: "short",
+	year: "numeric",
+}).format(note.data.publishDate);
+
+const tags = getEntryTags(note);
 ---
 
-<li
-	style="background: var(--bg2); border: 1px solid var(--border); border-radius: 5px; padding: 1rem 1.1rem; transition: border-color 0.15s; list-style: none;"
-	onmouseover="this.style.borderColor='var(--accent)'"
-	onmouseout="this.style.borderColor='var(--border)'"
->
-	<h4 style="font-size: 0.88rem; font-weight: 500; margin-bottom: 0.25rem;">{note.data.title}</h4>
-	{note.data.description && (
-		<p style="font-size: 0.82rem; color: var(--muted); font-family: var(--font-sans); margin: 0; line-height: 1.6;">
-			{note.data.description}
-		</p>
-	)}
+<li>
+	<article class="note-card">
+		<a class="card-content-link" href={`/til/${note.id}/`}>
+			<span class="card-badge">TIL</span>
+			<div class="card-meta">{dateFormatted}</div>
+			<h3 class="card-title">{note.data.title}</h3>
+			{note.data.description && <p class="card-description">{note.data.description}</p>}
+			<span class="story-link">Open note <span aria-hidden="true">→</span></span>
+		</a>
+		{tags.length > 0 && (
+			<div class="tag-list">
+				{tags.map((tag) => (
+					<a class="tag tag-link" href={getTagHref(tag)}>
+						#{tag}
+					</a>
+				))}
+			</div>
+		)}
+	</article>
 </li>
