@@ -16,5 +16,5 @@ Having spent some time playing around with AI , I am working to find some opinio
 
 4. Expecting more software than ever, smaller teams, and faster cycles of shipping software. Anthropic is reaching $39B run-rate with only 2700 employees
 
-5. 
+5. AI agents can now browse the web, compare prices, and negotiate with service providers completely on their own.Because humans no longer need to manually authorize every digital transaction, the volume of micro-transactions on the web will skyrocket.
 
